@@ -75,12 +75,12 @@ EOF
 
 echo_latest_version() {
   if [ "${EDGE-}" ]; then
-    version="$(curl -fsSL https://proxy.xcgx.eu/https://api.github.com/repos/coder/code-server/releases | awk 'match($0,/.*"html_url": "(.*\/releases\/tag\/.*)".*/)' | head -n 1 | awk -F '"' '{print $4}')"
+    version="$(curl -fsSL https://api.github.com/repos/coder/code-server/releases | awk 'match($0,/.*"html_url": "(.*\/releases\/tag\/.*)".*/)' | head -n 1 | awk -F '"' '{print $4}')"
   else
-    # https://proxy.xcgx.eu/https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c#gistcomment-2758860
-    version="$(curl -fsSLI -o /dev/null -w "%{url_effective}" https://proxy.xcgx.eu/https://github.com/coder/code-server/releases/latest)"
+    # https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c#gistcomment-2758860
+    version="$(curl -fsSLI -o /dev/null -w "%{url_effective}" https://github.com/coder/code-server/releases/latest)"
   fi
-  version="${version#https://proxy.xcgx.eu/https://github.com/coder/code-server/releases/tag/}"
+  version="${version#https://github.com/coder/code-server/releases/tag/}"
   version="${version#v}"
   echo "$version"
 }
@@ -484,7 +484,7 @@ os() {
 # - alpine -> alpine
 # - arch -> arch
 #
-# Inspired by https://proxy.xcgx.eu/https://github.com/docker/docker-install/blob/26ff363bcf3b3f5a00498ac43694bf1c7d9ce16c/install.sh#L111-L120.
+# Inspired by https://github.com/docker/docker-install/blob/26ff363bcf3b3f5a00498ac43694bf1c7d9ce16c/install.sh#L111-L120.
 distro() {
   if [ "$OS" = "macos" ] || [ "$OS" = "freebsd" ]; then
     echo "$OS"
